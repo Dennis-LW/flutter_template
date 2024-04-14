@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/template/drawer_template.dart';
+import 'package:flutter_template/template/todo_template.dart';
+import 'provider/todo_provider.dart';
 import 'template/bottom_navigation_bar_template.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => TodoProvider(),
+      )
+    ],
+    child: const App(),
+  ));
 }
 
 class App extends StatelessWidget {
@@ -61,7 +71,7 @@ class Home extends StatelessWidget {
               indicatorColor: Colors.white,
               tabs: [
                 Tab(
-                  icon: Icon(Icons.local_florist),
+                  icon: Icon(Icons.book),
                 ),
                 Tab(
                   icon: Icon(Icons.change_history),
@@ -73,11 +83,7 @@ class Home extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            Icon(
-              Icons.local_florist,
-              size: 128,
-              color: Colors.black12,
-            ),
+            TodoTemplate(),
             Icon(
               Icons.change_history,
               size: 128,
